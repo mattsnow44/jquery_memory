@@ -1,0 +1,43 @@
+body {
+  background-color: #2c3539;
+  color: whitesmoke;
+}
+.header-text {
+  text-align: center;
+  font-variant: small-caps;
+}
+
+.custom-row {
+  padding-bottom: 20px;
+}
+
+.custom-row img {
+  width: 75%;
+  display: block;
+  margin: 0 auto;
+}
+
+button {
+  height: 40px;
+  width: 100px;
+  border: 1px solid #ec1313;
+  border-radius: 5px;
+  background-color: #2c3539;
+}
+#no_match h3 {
+  padding-right: 30px;
+}
+#no_match h3,
+#no_match button {
+  display: inline-block;
+  color: #ec1313;
+}
+#no_match,
+#match,
+#win {
+  text-align: center;
+}
+#match,
+#win {
+  color: #4CAF50;
+}
