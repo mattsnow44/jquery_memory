@@ -16,17 +16,6 @@ var currentIndex = array.length, temporaryValue, randomIndex;
   return array;
 }
 
-function noMatch(id, clicked){
-  $("#no_match").show()
-  $("#no_match").append("<button type='button' id='no_match_button'>Flip Cards</button>")
-  $("#no_match_button").on('click', function(){
-    $("#"+id+" img").attr('src', "images/card_back_360.jpg").fadeIn('fast');
-    $("#"+clicked+" img").attr('src', "images/card_back_360.jpg").fadeIn('fast');
-    $("#no_match").hide()
-    $("#no_match_button").remove()
-  })
-}
-
 function match(id, clicked){
   $("#match").show()
   matched.push(id)
@@ -38,7 +27,7 @@ var arr = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8]
 var matched = []
 arr = shuffle(arr)
 matches = 0
-var clicked = null;
+var clicked = [];
 
 $(document).ready( function(){
   $("#no_match").hide()
@@ -47,24 +36,30 @@ $(document).ready( function(){
 
   $(".col-sm-3").on('click', function(){
     var id = $(this).attr('id')
-    if (id != clicked && ($.inArray(id, matched) == -1 ) && !($('#no_match_button').is(':visible'))){
-      if (clicked === null){
+    if (($.inArray(id, clicked) == -1) && ($.inArray(id, matched) == -1 )){
+      if(($('#no_match').is(':visible'))){
+        $("#no_match").hide()
+        $("#"+clicked[0]+" img").attr('src', "images/card_back_360.jpg").fadeIn('fast');
+        $("#"+clicked[1]+" img").attr('src', "images/card_back_360.jpg").fadeIn('fast');
+        clicked = []
+      }
+      if (clicked.length === 0){
         $("#match").hide()
         $("#"+id+" img").attr('src', "images/"+arr[id]+".jpg").fadeIn('fast');
-        clicked = id
+        clicked[0] = id
       } else {
         $("#"+id+" img").attr('src', "images/"+arr[id]+".jpg").fadeIn('fast');
-        if (arr[clicked] === arr[id]){
+        if (arr[clicked[0]] === arr[id]){
           if (matches == 7)
             $("#win").show()
           else
-            match(id, clicked)
-          clicked = null
+            match(id, clicked[0])
+            clicked = []
       }
         else {
           $("#"+id+" img").attr('src', "images/"+arr[id]+".jpg").fadeIn('fast');
-          noMatch(id, clicked)
-          clicked = null
+          clicked[1] = id
+          $("#no_match").show()
         }
       }
     }
